@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.CourseDao">
+
+    <insert id="insert">
+        insert into t_course(id,title,flag,creatTime) values (#{id},#{title},#{flag},#{creatTime})
+    </insert>
+
+    <select id="queryByPage" resultType="com.baizhi.entity.Course">
+        select id,title,flag,creatTime from t_course limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotals" resultType="long">
+        select count(id) from t_course
+    </select>
+
+</mapper>

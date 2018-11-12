@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao">
+
+    <insert id="insert">
+        insert into t_user(id,phoneNum,username,password,city,date) values (#{id},#{phoneNum},#{username},#{password},#{city},#{date})
+    </insert>
+
+    <select id="queryOne" resultType="com.baizhi.entity.User">
+        select * from t_user where username=#{username}and password=#{password}
+    </select>
+    
+    <update id="update">
+        update t_user set status=#{status} where id=#{id}
+    </update>
+
+</mapper>

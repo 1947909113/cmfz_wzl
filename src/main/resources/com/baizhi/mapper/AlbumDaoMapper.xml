@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+
+    <resultMap id="MenuRm" type="com.baizhi.entity.Album">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="publishDate" column="publishDate"/>
+        <result property="count" column="count"/>
+        <result property="coverImg" column="coverImg"/>
+        <result property="star" column="star"/>
+        <result property="author" column="author"/>
+        <result property="broadCast" column="broadCast"/>
+        <result property="brief" column="brief"/>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="id" column="s_id"/>
+            <result property="title" column="s_title"/>
+            <result property="size" column="s_size"/>
+            <result property="duration" column="s_duration"/>
+            <result property="downPath" column="s_downPath"/>
+            <result property="uploadTime" column="s_uploadTime"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryByPage" resultMap="MenuRm">
+          select f.id,f.title,f.publishDate,f.count,f.coverImg,f.star,f.author,f.broadCast,f.brief,
+          s.id s_id,s.title s_title,s.size s_size,s.duration s_duration,s.downPath s_downPath,s.uploadTime s_uploadTime
+          from t_album f left join t_chapter s
+          on f.id=s.parent_id
+          limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotals" resultType="long">
+        select count(id) from t_album
+    </select>
+
+    <insert id="insert">
+        insert into t_album(id,title,publishDate,count,coverImg,star,author,broadCast,brief) values (#{id},#{title},#{publishDate},#{count},#{coverImg},#{star},#{author},#{broadCast},#{brief})
+    </insert>
+
+    <select id="albumShow" resultType="com.baizhi.entity.Album">
+        select id,title,publishDate,count,coverImg,star,author,broadCast,brief from t_album where id=#{id}
+    </select>
+
+</mapper>
